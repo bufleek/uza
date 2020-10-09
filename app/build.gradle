@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -35,4 +36,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //firebase bom
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    //firebase analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    //firebase auth
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    //realtime db
+    implementation 'com.google.firebase:firebase-database-ktx'
+    //firebase storage
+    implementation 'com.google.firebase:firebase-storage-ktx'
 }
