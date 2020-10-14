@@ -14,4 +14,5 @@
     <string name="passwordEmptyError">Password cannot be empty!</string>
     <string name="nameBlankError">Name cannot be blank!</string>
     <string name="registrationFailedMessage">Registration failed. Try again later</string>
+    <string name="logout">Logout</string>
 </resources>
