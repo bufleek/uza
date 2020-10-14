@@ -12,4 +12,6 @@
     <string name="emailEmptyError">You have to provide an email address!</string>
     <string name="emailInvalidError">Please enter a valid email address!</string>
     <string name="passwordEmptyError">Password cannot be empty!</string>
+    <string name="nameBlankError">Name cannot be blank!</string>
+    <string name="registrationFailedMessage">Registration failed. Try again later</string>
 </resources>
