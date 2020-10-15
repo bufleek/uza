@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignupActivity : AppCompatActivity() {
@@ -30,12 +32,6 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun registerUser() {
-        if (username.text.toString().isEmpty()) {
-            username.error = getString(R.string.nameBlankError)
-            username.requestFocus()
-            return
-        }
-
         if (userEmail.text.toString().isEmpty()) {
             userEmail.error = getString(R.string.emailEmptyError)
             userEmail.requestFocus()
@@ -53,6 +49,8 @@ class SignupActivity : AppCompatActivity() {
             userPassword.requestFocus()
             return
         }
+
+        buttonSignup.setText(getString(R.string.signing_up))
 
         auth.createUserWithEmailAndPassword(userEmail.text.toString(), userPassword.text.toString())
             .addOnCompleteListener(this) { task ->
