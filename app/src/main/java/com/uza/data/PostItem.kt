@@ -5,5 +5,7 @@ data class PostItem(
     val description: String,
     val price: Double,
     val isAvailable: Boolean = false,
+    val dateCreated: Long,
+    val lastModified: Long,
     val images: List<PostItemImage>
 )
