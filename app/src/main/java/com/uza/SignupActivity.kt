@@ -50,7 +50,7 @@ class SignupActivity : AppCompatActivity() {
             return
         }
 
-        buttonSignup.setText(getString(R.string.signing_up))
+        buttonSignup.text = getString(R.string.signing_up)
 
         auth.createUserWithEmailAndPassword(userEmail.text.toString(), userPassword.text.toString())
             .addOnCompleteListener(this) { task ->
@@ -66,10 +66,11 @@ class SignupActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         baseContext,
-                        getString(R.string.registrationFailedMessage),
-                        Toast.LENGTH_SHORT
+                        task.exception?.message,
+                        Toast.LENGTH_LONG
                     ).show()
                 }
             }
+        buttonSignup.text = getString(R.string.userRegister)
     }
 }

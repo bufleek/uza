@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
                 updateUIWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
-                Toast.makeText(baseContext, getString(R.string.signInFailed) + e.statusCode, Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, e.message, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -85,9 +85,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
+                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT).show()
                     updateUI(user)
                 } else {
-                    Toast.makeText(baseContext, getString(R.string.signInFailed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, task.exception?.message, Toast.LENGTH_LONG).show()
                     updateUI(null)
                 }
             }
@@ -127,10 +128,13 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
+                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT).show()
                     updateUI(user)
                 } else {
+                    Toast.makeText(baseContext, task.exception?.message, Toast.LENGTH_LONG).show()
                     updateUI(null)
                 }
             }
+        buttonLogin.text = getString(R.string.userLogin)
     }
 }

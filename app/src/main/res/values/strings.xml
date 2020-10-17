@@ -17,9 +17,9 @@
     <string name="logout">Logout</string>
     <string name="app_logo">App Logo</string>
     <string name="sign_up_text">Sign Up</string>
-    <string name="signInFailed">\"Sign-in failed: \"</string>
+    <string name="signInFailed">Sign-in failed</string>
     <string name="welcome_text">Welcome %s</string>
     <string name="welcome">Welcome</string>
-    <string name="logging_in">Logging in...</string>
-    <string name="signing_up">Signing up...</string>
+    <string name="logging_in">Logging in…</string>
+    <string name="signing_up">Signing up…</string>
 </resources>
