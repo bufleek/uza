@@ -5,7 +5,7 @@
     <string name="userPassword">Password</string>
     <string name="userRegister">Sign Up</string>
     <string name="signIn">Sign In</string>
-    <string name="alreadyRegistered">Have an account?</string>
+    <string name="alreadyRegistered">Already have an account?</string>
     <string name="userLogin">Login</string>
     <string name="newUser">Don\'t have an account?</string>
     <string name="verifyMail">Please verify your email first</string>
