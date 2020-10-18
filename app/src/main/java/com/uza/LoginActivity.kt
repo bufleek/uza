@@ -3,7 +3,11 @@ package com.uza
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -13,12 +17,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.error_dialog.view.*
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 1
+    private lateinit var loadingDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
         // Register a new user
         buttonSignup.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
-            finish()
         }
 
         // Log in the user if credential matches
@@ -48,16 +53,26 @@ class LoginActivity : AppCompatActivity() {
         googleSignIn.setOnClickListener {
             googleSignIn()
         }
+
+        //set up loading dialog
+        val builder = AlertDialog.Builder(this)
+        val viewGroup: ViewGroup = findViewById(android.R.id.content)
+        val dialogView: View =
+            LayoutInflater.from(this).inflate(R.layout.loading_dialog, viewGroup, false)
+        builder.setView(dialogView)
+        loadingDialog = builder.create()
     }
 
     private fun googleSignIn() {
+        loadingDialog.show()
         val intent = mGoogleSignInClient.signInIntent
         startActivityForResult(intent, RC_SIGN_IN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
+            loadingDialog.dismiss()
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
@@ -69,8 +84,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         val currentUser = auth.currentUser
         updateUI(currentUser)
 
@@ -82,7 +97,8 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT)
+                        .show()
                     updateUI(user)
                 } else {
                     Toast.makeText(baseContext, task.exception?.message, Toast.LENGTH_LONG).show()
@@ -92,12 +108,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
-            if (currentUser != null) {
-                if (currentUser.isEmailVerified) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }
+        if (currentUser != null) {
+            if (currentUser.isEmailVerified) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }
+        }
     }
 
     private fun loginUser() {
@@ -119,19 +135,38 @@ class LoginActivity : AppCompatActivity() {
             userPassword.requestFocus()
             return
         }
-        buttonLogin.text = getString(R.string.logging_in)
+        loadingDialog.show()
 
-        auth.signInWithEmailAndPassword(userEmailLogin.text.toString(), userPassword.text.toString())
+        auth.signInWithEmailAndPassword(
+            userEmailLogin.text.toString(),
+            userPassword.text.toString()
+        )
             .addOnCompleteListener(this) { task ->
+                loadingDialog.dismiss()
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT)
+                        .show()
                     updateUI(user)
                 } else {
-                    Toast.makeText(baseContext, task.exception?.message, Toast.LENGTH_LONG).show()
-                    updateUI(null)
+                    showErrorDialog(task.exception?.message)
                 }
             }
-        buttonLogin.text = getString(R.string.userLogin)
+    }
+
+    private fun showErrorDialog(message: String?) {
+        if (message != null) {
+            val builder = AlertDialog.Builder(this)
+            val viewGroup: ViewGroup = findViewById(android.R.id.content)
+            val dialogView: View =
+                LayoutInflater.from(this).inflate(R.layout.error_dialog, viewGroup, false)
+            builder.setView(dialogView)
+            val dialog: AlertDialog = builder.create()
+            dialogView.dialogMessage.text = message
+            dialogView.btnDismissDialog.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
     }
 }

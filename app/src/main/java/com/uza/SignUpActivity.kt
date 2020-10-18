@@ -4,15 +4,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.error_dialog.view.*
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var loadingDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,14 @@ class SignUpActivity : AppCompatActivity() {
         buttonSignup.setOnClickListener {
             registerUser()
         }
+
+        //set up loading dialog
+        val builder = AlertDialog.Builder(this)
+        val viewGroup: ViewGroup = findViewById(android.R.id.content)
+        val dialogView: View =
+            LayoutInflater.from(this).inflate(R.layout.loading_dialog, viewGroup, false)
+        builder.setView(dialogView)
+        loadingDialog = builder.create()
     }
 
     private fun registerUser() {
@@ -50,10 +64,11 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        buttonSignup.text = getString(R.string.signing_up)
+        loadingDialog.show()
 
         auth.createUserWithEmailAndPassword(userEmail.text.toString(), userPassword.text.toString())
             .addOnCompleteListener(this) { task ->
+                loadingDialog.dismiss()
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     user!!.sendEmailVerification()
@@ -64,13 +79,24 @@ class SignUpActivity : AppCompatActivity() {
                             }
                         }
                 } else {
-                    Toast.makeText(
-                        baseContext,
-                        task.exception?.message,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showErrorDialog(task.exception?.message)
                 }
             }
-        buttonSignup.text = getString(R.string.userRegister)
+    }
+
+    private fun showErrorDialog(message: String?) {
+        if (message != null) {
+            val builder = AlertDialog.Builder(this)
+            val viewGroup: ViewGroup = findViewById(android.R.id.content)
+            val dialogView: View =
+                LayoutInflater.from(this).inflate(R.layout.error_dialog, viewGroup, false)
+            builder.setView(dialogView)
+            val dialog: AlertDialog = builder.create()
+            dialogView.dialogMessage.text = message
+            dialogView.btnDismissDialog.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
     }
 }

@@ -22,4 +22,5 @@
     <string name="welcome">Welcome</string>
     <string name="logging_in">Logging in…</string>
     <string name="signing_up">Signing up…</string>
+    <string name="okay">Ok</string>
 </resources>
