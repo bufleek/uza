@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Uza</string>
+    <string name="username">Name</string>
+    <string name="userEmail">Email</string>
+    <string name="userPassword">Password</string>
+    <string name="userRegister">Sign Up</string>
+    <string name="signIn">Sign In</string>
+    <string name="alreadyRegistered">Already have an account?</string>
+    <string name="userLogin">Login</string>
+    <string name="newUser">Don\'t have an account?</string>
+    <string name="verifyMail">Please verify your email first</string>
+    <string name="emailEmptyError">You have to provide an email address!</string>
+    <string name="emailInvalidError">Please enter a valid email address!</string>
+    <string name="passwordEmptyError">Password cannot be empty!</string>
+    <string name="nameBlankError">Name cannot be blank!</string>
+    <string name="registrationFailedMessage">Registration failed. Try again later</string>
+    <string name="logout">Logout</string>
+    <string name="app_logo">App Logo</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="signInFailed">Sign-in failed</string>
+    <string name="welcome_text">Welcome %s</string>
+    <string name="welcome">Welcome</string>
+    <string name="logging_in">Logging in…</string>
+    <string name="signing_up">Signing up…</string>
+    <string name="okay">Ok</string>
 </resources>
