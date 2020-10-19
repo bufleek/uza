@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DashboardActivity"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".SignUpActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
