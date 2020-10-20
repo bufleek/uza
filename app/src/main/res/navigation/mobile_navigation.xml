@@ -12,15 +12,16 @@
         tools:layout="@layout/fragment_shops" />
 
     <fragment
-        android:id="@+id/nav_messages"
-        android:name="com.uza.fragments.MessagesFragment"
-        android:label="@string/menu_messages"
-        tools:layout="@layout/fragment_messages" />
-
-    <fragment
         android:id="@+id/nav_categories"
         android:name="com.uza.fragments.CategoriesFragment"
         android:label="@string/menu_categories"
         tools:layout="@layout/fragment_categories" />
+
+
+    <fragment
+        android:id="@+id/nav_messages"
+        android:name="com.uza.fragments.MessagesFragment"
+        android:label="@string/menu_messages"
+        tools:layout="@layout/fragment_messages" />
 
 </navigation>
