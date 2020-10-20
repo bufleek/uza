@@ -34,4 +34,10 @@
     <string name="menu_shops">Shops</string>
     <string name="menu_messages">Messages</string>
     <string name="menu_categories">Categories</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Log out</string>
+    <string name="menu_sell">Sell Product</string>
+    <string name="menu_request">Request</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

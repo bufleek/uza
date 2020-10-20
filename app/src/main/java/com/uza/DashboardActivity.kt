@@ -29,7 +29,14 @@ class DashboardActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_shops, R.id.nav_categories, R.id.nav_messages), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.nav_shops,
+            R.id.nav_categories,
+            R.id.nav_messages,
+            R.id.nav_sell,
+            R.id.nav_request,
+            R.id.nav_settings
+        ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

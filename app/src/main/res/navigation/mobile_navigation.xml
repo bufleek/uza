@@ -24,4 +24,22 @@
         android:label="@string/menu_messages"
         tools:layout="@layout/fragment_messages" />
 
+    <fragment
+        android:id="@+id/nav_sell"
+        android:name="com.uza.fragments.SellFragment"
+        android:label="@string/menu_sell"
+        tools:layout="@layout/fragment_sell" />
+
+    <fragment
+        android:id="@+id/nav_request"
+        android:name="com.uza.fragments.RequestFragment"
+        android:label="@string/menu_request"
+        tools:layout="@layout/fragment_request" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.uza.fragments.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>
