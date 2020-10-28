@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Uza</string>
+    <string name="send">Send</string>
+    <string name="type_your_message">Type your message ...</string>
     <string name="username">Name</string>
     <string name="userEmail">Email</string>
     <string name="userPassword">Password</string>
