@@ -15,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class DashboardActivity : AppCompatActivity() {
@@ -45,6 +47,7 @@ class DashboardActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_logout -> {
+                    Firebase.auth.signOut()
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                     true
