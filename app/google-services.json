@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1033112110222-na9eovq60g8gnlm35iev16uv8vldf5fo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uza",
+            "certificate_hash": "dc979851acbdb152d8e6d922cb8a2c030c8e83db"
+          }
+        },
+        {
           "client_id": "1033112110222-qa781nciuedskm9abguehfi210kg5sfa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
