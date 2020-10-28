@@ -12,9 +12,10 @@
         <activity
             android:name=".ui.chat.ChatActivity"
             android:parentActivityName=".ui.chat.ChatMainActivity"
-            android:theme="@style/AppNoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".ui.chat.ChatMainActivity"/>
+            android:name=".ui.chat.ChatMainActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 
         <activity
             android:name=".DashboardActivity"

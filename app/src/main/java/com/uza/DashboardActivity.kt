@@ -15,7 +15,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.uza.ui.chat.ChatMainActivity
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -32,21 +34,28 @@ class DashboardActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_shops,
-            R.id.nav_categories,
-            R.id.nav_messages,
-            R.id.nav_sell,
-            R.id.nav_request,
-            R.id.nav_settings
-        ), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_shops,
+                R.id.nav_categories,
+                R.id.nav_messages,
+                R.id.nav_sell,
+                R.id.nav_request,
+                R.id.nav_settings
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_logout -> {
+                    Firebase.auth.signOut()
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
+                    true
+                }
+                R.id.nav_messages -> {
+                    startActivity(Intent(this, ChatMainActivity::class.java))
                     true
                 }
                 else -> true

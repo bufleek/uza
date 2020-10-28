@@ -31,9 +31,4 @@ class ChatAdapter: RecyclerView.Adapter<ChatViewHolder>() {
         this.messages = messages
         notifyDataSetChanged()
     }
-
-    fun addMessage(message: Message){
-        messages.add(message)
-        notifyDataSetChanged()
-    }
 }
