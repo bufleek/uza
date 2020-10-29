@@ -3,10 +3,11 @@ package com.uza.ui.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.uza.R
 
-class ChatRoomsAdapter: RecyclerView.Adapter<ChatRoomsViewHolder>() {
+class ChatRoomsAdapter(private val database: FirebaseDatabase): RecyclerView.Adapter<ChatRoomsViewHolder>() {
     private var chats: ArrayList<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRoomsViewHolder {
@@ -15,7 +16,8 @@ class ChatRoomsAdapter: RecyclerView.Adapter<ChatRoomsViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ChatRoomsViewHolder, position: Int) {
-
+        val chatReference: DatabaseReference = database.getReference("messages/${chats[position]}")
+        holder.bind(chatReference, chats[position])
     }
 
     override fun getItemCount(): Int {
