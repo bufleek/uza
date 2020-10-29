@@ -16,12 +16,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.uza.data.models.User
 
 class DashboardActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private val auth = Firebase.auth
+    private val database = Firebase.database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +52,7 @@ class DashboardActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_logout -> {
-                    Firebase.auth.signOut()
+                    auth.signOut()
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                     true
@@ -55,10 +60,39 @@ class DashboardActivity : AppCompatActivity() {
                 else -> true
             }
         }
+
+        //check if user is in database
+        val user = auth.currentUser
+        if (user != null){
+            val userReference = database.getReference("users/${user.uid}")
+            userReference.limitToLast(1).addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(!snapshot.hasChildren()){
+                        val newUser = User()
+                        newUser.email = user.email
+                        newUser.name = user.displayName
+                        userReference.setValue(newUser)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+
+            })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentUser = auth.currentUser
+        if (currentUser == null){
+            auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 }
