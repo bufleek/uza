@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.post.CreatePostActivity" android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:parentActivityName=".ui.chat.ChatMainActivity"
+            android:theme="@style/AppNoActionBar" />
+        <activity android:name=".ui.chat.ChatMainActivity" />
 
         <activity
             android:name=".DashboardActivity"
@@ -22,7 +28,11 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-
+          
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
