@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_shops">
+    app:startDestination="@+id/nav_products">
 
     <fragment
-        android:id="@+id/nav_shops"
-        android:name="com.uza.fragments.ShopsFragment"
-        android:label="@string/menu_shops"
-        tools:layout="@layout/fragment_shops" />
+        android:id="@+id/nav_products"
+        android:name="com.uza.fragments.ProductsFragment"
+        android:label="@string/menu_products"
+        tools:layout="@layout/fragment_products" />
 
     <fragment
         android:id="@+id/nav_categories"

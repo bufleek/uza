@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Uza</string>
+    <string name="post_item">Post Item</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="description">Description</string>
+    <string name="price_ksh">Price Ksh</string>
+    <string name="title">Title</string>
+    <string name="available">Available</string>
+    <string name="remove">Remove</string>
     <string name="send">Send</string>
     <string name="type_your_message">Type your message ...</string>
     <string name="username">Name</string>
@@ -47,4 +54,11 @@
     <string name="no_chats_message">There are no chats here yet. \n\n To start a chat, \n select the message option under a product</string>
     <string name="login_error_occured">Sorry. A login error occurred</string>
     <string name="something_went_wrong">Sorry, Something went wrong</string>
+    <string name="shops_title">Select a product from below</string>
+    <string name="name">Name</string>
+    <string name="price">00.00 Ksh</string>
+    <string name="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+    <string name="available">Not Available</string>
+    <string name="menu_products">Products</string>
+    <string name="buy">Buy</string>
 </resources>
