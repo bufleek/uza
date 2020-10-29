@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Uza</string>
+    <string name="post_item">Post Item</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="description">Description</string>
+    <string name="price_ksh">Price Ksh</string>
+    <string name="title">Title</string>
+    <string name="available">Available</string>
+    <string name="remove">Remove</string>
     <string name="send">Send</string>
     <string name="type_your_message">Type your message ...</string>
     <string name="username">Name</string>
