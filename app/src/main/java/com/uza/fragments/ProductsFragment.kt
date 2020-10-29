@@ -9,28 +9,24 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.uza.R
-import com.uza.adapters.ShopListAdapter
+import com.uza.adapters.ProductListAdapter
 import com.uza.viewmodels.ShopsViewModel
-import kotlinx.android.synthetic.main.fragment_shops.*
-import kotlinx.android.synthetic.main.shop_dialog.view.*
-import kotlinx.android.synthetic.main.shop_dialog.view.name
-import kotlinx.android.synthetic.main.shop_dialog.view.price
-import kotlinx.android.synthetic.main.shop_list_item.view.*
+import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.product_dialog.view.*
 
-class ShopsFragment : Fragment() {
+class ProductsFragment : Fragment() {
     private val viewModel: ShopsViewModel by viewModels()
     private val ref = FirebaseStorage.getInstance().reference
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel.getPosts()
-        return inflater.inflate(R.layout.fragment_shops, container, false)
+        return inflater.inflate(R.layout.fragment_products, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,24 +35,26 @@ class ShopsFragment : Fragment() {
         viewModel.posts.observe(viewLifecycleOwner, {
             shops_recycler.apply {
                 setHasFixedSize(true)
-                adapter = ShopListAdapter(it) { it ->
-                    val view =
-                        LayoutInflater.from(requireContext()).inflate(R.layout.shop_dialog, null)
-                    view.name.text = it.title
-                    view.price.text = "Ksh. ${it.price}"
-                    view.description.text = it.description
+                adapter = ProductListAdapter(it) { it ->
+                    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.product_dialog, null)
+                    val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).show()
+                    dialogView.name.text = it.title
+                    dialogView.price.text = "Ksh. ${it.price}"
+                    dialogView.description.text = it.description
                     when(it.available){
                         true -> {
-                            view.availability.setTextColor(resources.getColor(R.color.success))
-                            view.availability.text = "Available"
+                            dialogView.availability.setTextColor(resources.getColor(R.color.success))
+                            dialogView.availability.text = "Available"
                         }
-                        else -> view.availability.text = "Not Available"
+                        else -> dialogView.availability.text = "Not Available"
                     }
                     ref.child(it.images[0]).downloadUrl.addOnSuccessListener {
-                        Log.d("Uri", "onViewCreated: $it")
-                        Glide.with(context).setDefaultRequestOptions(options).load(it).into(view.shop_image)
+                        Glide.with(context).setDefaultRequestOptions(options).load(it).into(dialogView.shop_image)
                     }
-                    AlertDialog.Builder(requireContext()).setView(view).show()
+                    dialogView.btn_buy.setOnClickListener {
+                        dialog.dismiss()
+                        Toast.makeText(requireContext(), "Buying product...", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })

@@ -6,16 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.ShopsFragment">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_slideshow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/shops_title"
-        android:textAlignment="center"
-        android:textSize="15sp" />
+    tools:context=".fragments.ProductsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shops_recycler"
@@ -24,7 +15,7 @@
         android:layout_margin="10dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        tools:listitem="@layout/shop_list_item" />
+        tools:listitem="@layout/product_list_item" />
 
 
 </LinearLayout>
