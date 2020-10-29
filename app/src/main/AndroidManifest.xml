@@ -30,9 +30,7 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-          
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/SplashTheme">
