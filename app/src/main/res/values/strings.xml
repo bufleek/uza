@@ -42,7 +42,7 @@
     <string name="menu_request">Request</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="uza_messaging">Uza Messaging</string>
+    <string name="uza_messaging">Uza messaging</string>
     <string name="connecting">Connecting ...</string>
     <string name="no_chats_message">There are no chats here yet. \n\n To start a chat, \n select the message option under a product</string>
     <string name="login_error_occured">Sorry. A login error occurred</string>
