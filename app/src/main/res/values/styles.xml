@@ -12,6 +12,9 @@
     <style name="ChatSenderText">
         <item name="android:background">@drawable/chat_text_sender_bg</item>
     </style>
+    <style name="ChatReceiverText">
+        <item name="android:background">@drawable/chat_text_receiver_bg</item>
+    </style>
     <style name="AppNoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,18 +30,40 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
+        val user = Firebase.auth.currentUser
+        if (user == null){
+            Toast.makeText(baseContext, getString(R.string.login_error_occured), Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+        else{
+            viewModel.currentUserId = user.uid
+            chatAdapter = ChatAdapter(viewModel.currentUserId!!)
+        }
+        val intent = intent
+        if (intent != null){
+            val chatRoom = intent.getStringExtra("chatroom")
+            if (chatRoom == null || chatRoom.isEmpty()){
+                Toast.makeText(baseContext, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
+                finish()
+            }
+            else{
+                viewModel.chatRoomId = chatRoom
+                viewModel.initialize(chatRoom)
+            }
+        }
+        else{
+            Toast.makeText(baseContext, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
+            finish()
+        }
         val binding: ActivityChatBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_chat)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-        }
+        back.setOnClickListener { finish() }
 
         chatDatabaseReference = database.getReference("messages/${viewModel.chatRoomId}")
-        chatAdapter = ChatAdapter()
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.apply {
             layoutManager = linearLayoutManager
@@ -69,6 +92,7 @@ class ChatActivity : AppCompatActivity() {
                         message.id = snapshot.key
                         viewModel.chatMessages.add(message)
                         chatAdapter.changeData(viewModel.chatMessages)
+                        recyclerView.scrollToPosition(viewModel.chatMessages.size - 1)
                     }
                 }
             }

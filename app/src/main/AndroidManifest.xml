@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.uza">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,9 +13,12 @@
         <activity
             android:name=".ui.chat.ChatActivity"
             android:parentActivityName=".ui.chat.ChatMainActivity"
-            android:theme="@style/AppNoActionBar" />
-        <activity android:name=".ui.chat.ChatMainActivity" />
-
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+      
+        <activity
+            android:name=".ui.chat.ChatMainActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+      
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard"

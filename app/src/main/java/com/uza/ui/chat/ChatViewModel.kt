@@ -11,8 +11,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatViewModel: ViewModel(){
-    var chatRoomId: String = "397WmBak26cEs4XF6baCdpflz3c2_BPdPQl1egQVt4RTYKCt54LMUiZx1"
-    private val chatRepo = ChatRepo(chatRoomId)
+    var currentUserId: String? = null
+    var chatRoomId: String = ""
+    private var chatRepo: ChatRepo? = null
     var newMessage: Message = Message()
     private val _isSendEnabled: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val isSendEnabled: LiveData<Boolean>
@@ -21,6 +22,10 @@ class ChatViewModel: ViewModel(){
     val clearNewMessageEditText: MutableLiveData<Boolean> by lazy {
         MutableLiveData()
     }
+
+   fun initialize(room: String){
+       chatRepo = ChatRepo(room)
+   }
 
     fun setNewMessage(editable: Editable){
         newMessage.text = editable.toString().trim()
@@ -37,9 +42,11 @@ class ChatViewModel: ViewModel(){
         }
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
         newMessage.date = date
-        newMessage.sender = "sender1"
-        chatRepo.sendMessage(newMessage)
-        newMessage = Message()
-        clearNewMessageEditText.value = true
+        newMessage.sender = currentUserId
+        if (!newMessage.sender.isNullOrEmpty() && chatRepo != null && chatRoomId.isNotEmpty()){
+            chatRepo?.sendMessage(newMessage)
+            newMessage = Message()
+            clearNewMessageEditText.value = true
+        }
     }
 }

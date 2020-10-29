@@ -11,13 +11,16 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.uza.ui.chat.ChatMainActivity
 import androidx.core.view.GravityCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.uza.data.models.User
 import com.uza.ui.chat.ChatMainActivity
 import com.uza.ui.post.CreatePostActivity
@@ -47,7 +50,7 @@ class DashboardActivity : AppCompatActivity() {
             R.id.nav_request,
             R.id.nav_settings
         ), drawerLayout)
-
+      
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener {
@@ -66,6 +69,11 @@ class DashboardActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_messages->{
+                    startActivity(Intent(this, ChatMainActivity::class.java))
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_messages -> {
                     startActivity(Intent(this, ChatMainActivity::class.java))
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true

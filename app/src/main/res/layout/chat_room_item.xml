@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userImage"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
-        android:scaleType="center"
-        android:src="@drawable/ic_uza_logo"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,9 +24,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="User Name"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/userImage"
         app:layout_constraintTop_toTopOf="@id/userImage" />
@@ -41,6 +42,32 @@
         app:layout_constraintStart_toEndOf="@id/userImage"
         app:layout_constraintTop_toBottomOf="@id/userName"
         app:layout_constraintBottom_toBottomOf="@id/userImage"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/userName"
+        app:layout_constraintBottom_toTopOf="@id/chatLastMessage"
+        android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@color/primaryColor"
+        android:background="?attr/colorSurface"
+        android:textSize="12sp"
+        android:text="Date"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@id/chatLastMessage"
+        app:layout_constraintStart_toStartOf="@id/chatLastMessage"
+        app:layout_constraintEnd_toEndOf="@id/chatLastMessage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
