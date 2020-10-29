@@ -54,7 +54,6 @@ class SplashActivity : AppCompatActivity(){
             }
         }
 
-
     }
 
     companion object {

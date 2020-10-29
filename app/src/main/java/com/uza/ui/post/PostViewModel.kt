@@ -26,7 +26,7 @@ class PostViewModel : ViewModel() {
         postItem.isAvailable = boolean
     }
 
-    fun uploadPost(){
-        postsRepo.uploadPost(postItem, pickedImages)
+    fun uploadPost(uid: String) {
+        postsRepo.uploadPost(uid, postItem, pickedImages)
     }
 }

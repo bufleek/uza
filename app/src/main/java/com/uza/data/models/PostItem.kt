@@ -8,5 +8,6 @@ data class PostItem(
     var isAvailable: Boolean = false,
     var dateCreated: Long? = null,
     var lastModified: Long? = null,
-    var images: ArrayList<String> = ArrayList()
+    var images: ArrayList<String> = ArrayList(),
+    var sellerId: String? = null
 )

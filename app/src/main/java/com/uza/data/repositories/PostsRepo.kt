@@ -14,14 +14,14 @@ class PostsRepo {
     private val postsDbRef: DatabaseReference
 
     init {
-        database.setPersistenceEnabled(true)
         postsDbRef = database.getReference("posts")
     }
 
-    fun uploadPost(postItem: PostItem, pickedImages: ArrayList<Bitmap>) {
+    fun uploadPost(uid: String, postItem: PostItem, pickedImages: ArrayList<Bitmap>) {
         val timestamp = System.currentTimeMillis()
         if (postItem.id == null) {
             postItem.dateCreated = timestamp
+            postItem.sellerId = uid
         }
         postItem.lastModified = timestamp
         val imagesRef = if (postItem.id == null) {
