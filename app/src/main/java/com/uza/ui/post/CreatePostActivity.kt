@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.uza.LoginActivity
 import com.uza.data.models.PostItem
 import com.uza.databinding.ActivityCreatePostBinding
 import kotlinx.android.synthetic.main.activity_create_post.*
@@ -17,7 +20,22 @@ import kotlinx.android.synthetic.main.activity_create_post.*
 class CreatePostActivity : AppCompatActivity() {
     private lateinit var viewModel: PostViewModel
     private lateinit var pickedImagesAdapter: PickedImagesAdapter
+    private val auth = Firebase.auth
+    private lateinit var uid: String
 
+    override fun onResume() {
+        super.onResume()
+        val currentUser = auth.currentUser
+        if (currentUser == null){
+            //login check
+            auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+        else{
+            uid = currentUser.uid
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityCreatePostBinding = ActivityCreatePostBinding.inflate(layoutInflater)
@@ -60,7 +78,7 @@ class CreatePostActivity : AppCompatActivity() {
             return
         }
 
-        viewModel.uploadPost()
+        viewModel.uploadPost(uid)
         Toast.makeText(this, "Uploading", Toast.LENGTH_SHORT).show()
         //reset
         viewModel.pickedImages.clear()
