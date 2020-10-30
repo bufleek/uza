@@ -123,6 +123,7 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        navView.setCheckedItem(R.id.nav_products)
         val currentUser = auth.currentUser
         if (currentUser == null) {
             auth.signOut()

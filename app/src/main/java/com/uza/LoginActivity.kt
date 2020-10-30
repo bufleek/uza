@@ -66,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun googleSignIn() {
         loadingDialog.show()
+        loadingDialog.setCancelable(false)
         val intent = mGoogleSignInClient.signInIntent
         startActivityForResult(intent, RC_SIGN_IN)
     }
@@ -138,6 +139,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         loadingDialog.show()
+        loadingDialog.setCancelable(false)
 
         auth.signInWithEmailAndPassword(
             userEmailLogin.text.toString(),
