@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.uza.data.models.User
 import com.uza.ui.post.CreatePostActivity
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -34,20 +35,21 @@ class DashboardActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_products,
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_products,
 //            R.id.nav_categories,
-            R.id.nav_messages,
-            R.id.nav_sell,
+                R.id.nav_messages,
+                R.id.nav_sell,
 //            R.id.nav_request,
 //            R.id.nav_settings
-        ), drawerLayout)
-      
+            ), drawerLayout
+        )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener {
@@ -65,7 +67,7 @@ class DashboardActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.nav_messages->{
+                R.id.nav_messages -> {
                     startActivity(Intent(this, ChatMainActivity::class.java))
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
@@ -81,8 +83,13 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         //check if user is in database
+        //and
+        //set nav header text
         val user = auth.currentUser
         if (user != null) {
+            val navHeader = navView.getHeaderView(0)
+            navHeader.currentUserEmail.text = user.email
+
             val userReference = database.getReference("users/${user.uid}")
             userReference.limitToLast(1)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -92,6 +99,14 @@ class DashboardActivity : AppCompatActivity() {
                             newUser.email = user.email
                             newUser.name = user.displayName
                             userReference.setValue(newUser)
+                        } else {
+                            val existingUser = snapshot.getValue(User::class.java)
+                            if (existingUser != null) {
+                                navHeader.currentUser.text = existingUser.name?.capitalize()
+                                if (existingUser.name == null) {
+                                    userReference.child("name").setValue(user.displayName)
+                                }
+                            }
                         }
                     }
 

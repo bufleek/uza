@@ -67,7 +67,6 @@ class ChatMainActivity : AppCompatActivity() {
             dialog.show()
             dialog.setCancelable(false)
             if (user != null) {
-                val userChatRef = database.getReference("users/${user!!.uid}/chatrooms/")
                 val possibleChatId1 = "${user?.uid}_${chatWith}"
                 val possibleChatId2 = "${chatWith}_${user?.uid}"
                 dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -77,7 +76,7 @@ class ChatMainActivity : AppCompatActivity() {
                             val chat = snap.getValue(ChatRoom::class.java)
                             if (chat != null && chat.id == possibleChatId1 || chat != null && chat.id == possibleChatId2) {
                                 dialog.dismiss()
-                                snap.key?.let { launchPreparedChatRoom(it) }
+                                snap.key?.let { launchPreparedChatRoom(it, chatWith) }
                                 chatExists = true
                                 break
                             }
@@ -88,7 +87,7 @@ class ChatMainActivity : AppCompatActivity() {
                             database.getReference("users/${chatWith}/chatrooms")
                                 .child(possibleChatId1).child("chatWith").setValue(user?.uid)
                             dialog.dismiss()
-                            launchPreparedChatRoom(possibleChatId1)
+                            launchPreparedChatRoom(possibleChatId1, chatWith)
                         }
                     }
 
@@ -133,10 +132,11 @@ class ChatMainActivity : AppCompatActivity() {
         }
     }
 
-    fun launchPreparedChatRoom(chat: String) {
+    fun launchPreparedChatRoom(chat: String, chatWith: String) {
         startActivity(
             Intent(this, ChatActivity::class.java)
                 .putExtra("chatroom", chat)
+                .putExtra("chatWith", chatWith)
         )
     }
 
