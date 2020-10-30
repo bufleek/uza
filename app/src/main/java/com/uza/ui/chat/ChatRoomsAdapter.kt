@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.uza.R
+import com.uza.data.models.ChatRoom
 
 class ChatRoomsAdapter(private val database: FirebaseDatabase): RecyclerView.Adapter<ChatRoomsViewHolder>() {
-    private var chats: ArrayList<String> = ArrayList()
+    private var chats: ArrayList<ChatRoom> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRoomsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_room_item, parent, false)
@@ -16,7 +17,7 @@ class ChatRoomsAdapter(private val database: FirebaseDatabase): RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ChatRoomsViewHolder, position: Int) {
-        val chatReference: DatabaseReference = database.getReference("messages/${chats[position]}")
+        val chatReference: DatabaseReference = database.getReference("messages/${chats[position].id}")
         holder.bind(chatReference, chats[position])
     }
 
@@ -28,7 +29,7 @@ class ChatRoomsAdapter(private val database: FirebaseDatabase): RecyclerView.Ada
         chats.clear()
     }
 
-    fun changeData(chats: ArrayList<String>){
+    fun changeData(chats: ArrayList<ChatRoom>){
         this.chats = chats
         notifyDataSetChanged()
     }

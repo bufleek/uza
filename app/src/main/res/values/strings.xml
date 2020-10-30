@@ -61,4 +61,7 @@
 <!--    <string name="available">Not Available</string>-->
     <string name="menu_products">Products</string>
     <string name="buy">Buy</string>
+    <string name="failed_to_prepare_chat">Failed to prepare chat. Try again later</string>
+    <string name="chat_with_seller">Chat with seller</string>
+    <string name="preparing_chat">Preparing Chat ...</string>
 </resources>

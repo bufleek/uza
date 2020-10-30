@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="User Name"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/userImage"
@@ -37,7 +36,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Last Message"
+        android:text="(No messages)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/userImage"
         app:layout_constraintTop_toBottomOf="@id/userName"
@@ -58,8 +57,7 @@
         android:paddingEnd="8dp"
         android:textColor="@color/primaryColor"
         android:background="?attr/colorSurface"
-        android:textSize="12sp"
-        android:text="Date"/>
+        android:textSize="12sp"/>
 
     <View
         android:id="@+id/divider"
