@@ -8,16 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.uza.R
 import com.uza.data.models.Message
 import com.uza.databinding.ActivityChatBinding
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.chat_room_item.view.*
 import kotlinx.android.synthetic.main.chat_sender_message.*
 
 class ChatActivity : AppCompatActivity() {
@@ -31,29 +29,47 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
         val user = Firebase.auth.currentUser
-        if (user == null){
-            Toast.makeText(baseContext, getString(R.string.login_error_occured), Toast.LENGTH_LONG).show()
+        if (user == null) {
+            Toast.makeText(baseContext, getString(R.string.login_error_occured), Toast.LENGTH_LONG)
+                .show()
             finish()
             return
-        }
-        else{
+        } else {
             viewModel.currentUserId = user.uid
             chatAdapter = ChatAdapter(viewModel.currentUserId!!)
         }
         val intent = intent
-        if (intent != null){
+        if (intent != null) {
             val chatRoom = intent.getStringExtra("chatroom")
-            if (chatRoom == null || chatRoom.isEmpty()){
-                Toast.makeText(baseContext, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
-                finish()
+            val chatWith = intent.getStringExtra("chatWith")
+            if (chatWith != null) {
+                val chatWithRef = database.getReference("users/${chatWith}")
+                chatWithRef.child("name").addListenerForSingleValueEvent(object :
+                    ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            chatUserName.text = snapshot.getValue(String::class.java)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {}
+
+                })
             }
-            else{
+            if (chatRoom == null || chatRoom.isEmpty()) {
+                Toast.makeText(
+                    baseContext,
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                finish()
+            } else {
                 viewModel.chatRoomId = chatRoom
                 viewModel.initialize(chatRoom)
             }
-        }
-        else{
-            Toast.makeText(baseContext, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(baseContext, getString(R.string.something_went_wrong), Toast.LENGTH_LONG)
+                .show()
             finish()
         }
         val binding: ActivityChatBinding =

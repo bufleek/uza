@@ -8,28 +8,33 @@ import com.google.firebase.database.FirebaseDatabase
 import com.uza.R
 import com.uza.data.models.ChatRoom
 
-class ChatRoomsAdapter(private val database: FirebaseDatabase): RecyclerView.Adapter<ChatRoomsViewHolder>() {
+class ChatRoomsAdapter(private val database: FirebaseDatabase) :
+    RecyclerView.Adapter<ChatRoomsViewHolder>() {
     private var chats: ArrayList<ChatRoom> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRoomsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_room_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.chat_room_item, parent, false)
         return ChatRoomsViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ChatRoomsViewHolder, position: Int) {
-        val chatReference: DatabaseReference = database.getReference("messages/${chats[position].id}")
-        holder.bind(chatReference, chats[position])
+        val chatReference: DatabaseReference =
+            database.getReference("messages/${chats[position].id}")
+        val chatWithReference: DatabaseReference =
+            database.getReference("users/${chats[position].chatWith}")
+        holder.bind(chatReference, chats[position], chatWithReference)
     }
 
     override fun getItemCount(): Int {
         return chats.size
     }
 
-    fun clearData(){
+    fun clearData() {
         chats.clear()
     }
 
-    fun changeData(chats: ArrayList<ChatRoom>){
+    fun changeData(chats: ArrayList<ChatRoom>) {
         this.chats = chats
         notifyDataSetChanged()
     }
