@@ -89,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
         super.onResume()
         val currentUser = auth.currentUser
         updateUI(currentUser)
-
     }
 
     private fun updateUIWithGoogle(idToken: String) {
@@ -98,11 +97,9 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT)
-                        .show()
                     updateUI(user)
                 } else {
-                    Toast.makeText(baseContext, task.exception?.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(baseContext, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
                     updateUI(null)
                 }
             }
@@ -113,6 +110,10 @@ class LoginActivity : AppCompatActivity() {
             if (currentUser.isEmailVerified) {
                 startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
+            }
+            else{
+                auth.signOut()
+                showErrorDialog(getString(R.string.verifyMailToContinue))
             }
         }
     }
@@ -146,8 +147,6 @@ class LoginActivity : AppCompatActivity() {
                 loadingDialog.dismiss()
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(baseContext, "Welcome ${user?.displayName}", Toast.LENGTH_SHORT)
-                        .show()
                     updateUI(user)
                 } else {
                     showErrorDialog(task.exception?.message)

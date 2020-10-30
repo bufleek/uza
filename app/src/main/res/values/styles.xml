@@ -1,21 +1,11 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/primaryTextColor</item>
-        <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
-    </style>
     <style name="ChatSenderText">
         <item name="android:background">@drawable/chat_text_sender_bg</item>
     </style>
     <style name="ChatReceiverText">
         <item name="android:background">@drawable/chat_text_receiver_bg</item>
     </style>
-    <style name="AppNoActionBar" parent="AppTheme">
+    <style name="AppNoActionBar" parent="Theme.App">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

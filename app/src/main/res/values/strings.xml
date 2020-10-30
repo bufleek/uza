@@ -64,4 +64,5 @@
     <string name="failed_to_prepare_chat">Failed to prepare chat. Try again later</string>
     <string name="chat_with_seller">Chat with seller</string>
     <string name="preparing_chat">Preparing Chat ...</string>
+    <string name="verifyMailToContinue">Please verify your email to continue. \nCheck your email for a verification link</string>
 </resources>
